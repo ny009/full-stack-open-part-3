@@ -1,6 +1,19 @@
 const express = require('express')
+const morgan = require('morgan')
+
 const app = express()
+
+// Middleware defined
+// Express JSON to parse request data
 app.use(express.json())
+
+// Morgan to log info when API is called
+morgan.token('print-post-body', (req) => {
+  if (req.method === 'POST') {
+    return JSON.stringify(req.body)
+  }
+})
+app.use(morgan(':method :url :status - :response-time ms :print-post-body'))
 
 let persons = [
   { 
