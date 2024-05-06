@@ -27,9 +27,7 @@ let persons = [
 
 const generateId = () => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
 
-app.get('/', (req, res) => {
-  res.send('<h1> Hello World! </h1>')
-})
+app.get('/', (req, res) => res.send('<h1> Hello World! </h1>'))
 
 app.get('/api/persons', (req, res) => res.json(persons))
 
