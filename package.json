@@ -1,0 +1,27 @@
+{
+  "name": "full-stack-open-part-3",
+  "version": "1.0.0",
+  "description": "Part 3 of full stack open course exercises",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ny009/full-stack-open-part-3.git"
+  },
+  "author": "nehal yatham",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ny009/full-stack-open-part-3/issues"
+  },
+  "homepage": "https://github.com/ny009/full-stack-open-part-3#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
