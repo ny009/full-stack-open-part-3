@@ -1,11 +1,13 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 
 const app = express()
-
 // Middleware defined
 // Express JSON to parse request data
+app.use(cors())
 app.use(express.json())
+app.use(express.static('dist'))
 
 // Morgan to log info when API is called
 morgan.token('print-post-body', (req) => {
@@ -39,8 +41,6 @@ let persons = [
 ]
 
 const generateId = () => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
-
-app.get('/', (req, res) => res.send('<h1> Hello World! </h1>'))
 
 app.get('/api/persons', (req, res) => res.json(persons))
 
@@ -98,5 +98,5 @@ app.post('/api/persons', (req, res) => {
   res.json(person)
 })
 
-const PORT = 3001
-app.listen(PORT, () => console.log('Hello World, App is currently running on PORT', PORT))
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => console.log('Hej! Server is currently running on PORT', PORT))
