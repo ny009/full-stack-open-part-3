@@ -1,6 +1,8 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+require('dotenv').config()
+const Person = require('./models/persons')
 
 const app = express()
 // Middleware defined
@@ -42,7 +44,7 @@ let persons = [
 
 const generateId = () => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
 
-app.get('/api/persons', (req, res) => res.json(persons))
+app.get('/api/persons', (req, res) => Person.find({}).then(persons =>res.json(persons)))
 
 app.get('/info', (req, res) => res.send(`
   <p> Phonebook has info for ${persons.length} people </p>
@@ -51,13 +53,7 @@ app.get('/info', (req, res) => res.send(`
 )
 
 app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const person = persons.find(person => person.id === id)
-  if (person) {
-    res.json(person)
-  } else {
-    res.status(404).end()
-  }
+Person.findById(req.params.id).then(person => res.json(person))
 })
 
 app.delete('/api/persons/:id', (req, res) => {
@@ -87,15 +83,16 @@ app.post('/api/persons', (req, res) => {
       Error: 'Name must be unique'
     })
   }
-
-  // If the cases pass, we are gonna make a new entry
-  const person = {
-    id: generateId(),
+  // // If the cases pass, we are gonna make a new entry
+  const person = new Person({
     name: body.name,
     number: body.number,
-  }
-  persons = [...persons, person]
-  res.json(person)
+  })
+
+  person.save().then(() => {
+    console.log(`Added ${person.name} ${person.number}`)
+    res.json(person)
+  })
 })
 
 const PORT = process.env.PORT || 3001
