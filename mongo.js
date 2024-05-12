@@ -26,12 +26,12 @@ const personSchema = new mongoose.Schema({
 const Person = mongoose.model('Person', personSchema)
 
 if (arg_len > 3) {
-  const {3: name, 4: number} = process.argv
+  const { 3: name, 4: number } = process.argv
   const person = new Person({
     name: name,
     number: number,
   })
-  
+
   person.save().then(() => {
     console.log(`added ${name} number ${number} to the phonebook!`)
     mongoose.connection.close()

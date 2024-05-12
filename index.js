@@ -35,7 +35,7 @@ app.get('/info', (req, res, next) => {
 
 app.get('/api/persons', (req, res, next) => {
   Person.find({})
-    .then(persons =>res.json(persons))
+    .then(persons => res.json(persons))
     .catch(err => next(err))
 })
 
@@ -52,7 +52,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
 })
 
 app.post('/api/persons', (req, res, next) => {
-  const {name, number} = req.body
+  const { name, number } = req.body
   // Error Handling
   if (!name || !number) {
     return res.status(400).json({
@@ -67,15 +67,15 @@ app.post('/api/persons', (req, res, next) => {
   })
 
   person.save()
-  .then(() => {
-    console.log(`Added ${person.name} ${person.number}`)
-    res.json(person)
-  })
-  .catch(err => next(err))
+    .then(() => {
+      console.log(`Added ${person.name} ${person.number}`)
+      res.json(person)
+    })
+    .catch(err => next(err))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
-  const {name, number} = req.body
+  const { name, number } = req.body
 
   // Error Handling
   if (!name || !number) {
@@ -90,10 +90,10 @@ app.put('/api/persons/:id', (req, res, next) => {
   }
 
   Person.findByIdAndUpdate(
-      req.params.id, 
-      person, 
-      {new: true, runValidators: true, context: 'query' }
-    )
+    req.params.id,
+    person,
+    { new: true, runValidators: true, context: 'query' }
+  )
     .then(updatedPerson => res.json(updatedPerson))
     .catch(err => next(err))
 })
@@ -108,10 +108,10 @@ app.use(unknownEndpoint)
 const errorHandler = (err, req, res, next) => {
   console.log(err.messge)
   if (err.name === 'CastError') {
-    return res.status(400).send({error: 'Malformed Id'})
+    return res.status(400).send({ error: 'Malformed Id' })
   }
   if (err.name === 'ValidationError') {
-    return res.status(400).json({error: err.message})
+    return res.status(400).json({ error: err.message })
   }
   next(err)
 }
